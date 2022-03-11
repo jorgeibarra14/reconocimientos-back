@@ -20,6 +20,7 @@ namespace Reconocimientos.Models
     {
         public Role Role;
         public string Id { get; set; }
+        public int AppId { get; set; }
         public string Nombre { get; set; }
         public string Paterno { get; set; }
         public string Materno { get; set; }
