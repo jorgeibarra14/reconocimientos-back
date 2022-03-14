@@ -83,9 +83,10 @@ namespace Reconocimientos.Controllers
             return Ok(_odsService.ObtenerInformacionODSporId(id_empleado));
         }
 
-        public ActionResult<IEnumerable<InformacionOdsDetalle>> ObtenerInformacionODS(string id_empleado)
+        [HttpGet("ObtenerInformacionODS/{id_empleado}/{companyId}")]
+        public ActionResult<IEnumerable<InformacionOdsDetalle>> ObtenerInformacionODS(string id_empleado, int companyId)
         {
-            return Ok(_odsService.ObtenerInformacionODS());
+            return Ok(_odsService.ObtenerInformacionODS(id_empleado, companyId));
         }
 
         // GET: api/<AutorizadoresController>/ConsultarAutorizadoresDistintos
@@ -96,6 +97,7 @@ namespace Reconocimientos.Controllers
             return Ok(listaAutorizadores);
         }
 
+        [HttpGet("ObtenerEmpleadosPorNombre/{id_empleado}/{companyId}")]
         public async Task<IEnumerable<InformacionOdsDetalle>> ObtenerEmpleadosPorNombre(string Nombre)
         {
             try

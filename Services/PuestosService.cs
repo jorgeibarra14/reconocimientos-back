@@ -81,10 +81,7 @@ namespace Reconocimientos.Services
                         IdPuesto = puesto.puestoId,
                         Nombre = puesto.nombre,
                         Nivel = puesto.nivel,
-                        Puntos = puesto.puntos,
-                        Uen = puesto.uen,
-                        Jerarquia= puesto.jerarquia,
-                        Activo = Convert.ToInt32(puesto.activo)
+                        Puntos = puesto.puntos
                     });
                 }
 
@@ -132,9 +129,7 @@ namespace Reconocimientos.Services
                             IdPuesto = puesto.puestoId,
                             Nombre = puesto.nombre,
                             Nivel = puesto.nivel,
-                            Puntos = puesto.puntos,
-                            Uen = puesto.uen,
-                            Jerarquia = puesto.jerarquia
+                            Puntos = puesto.puntos
                         });
                 }
 

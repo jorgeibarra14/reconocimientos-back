@@ -51,7 +51,7 @@ namespace Reconocimientos.Services
             }
         }
 
-        public IEnumerable<InformacionOdsDetalle> ObtenerInformacionODSporNombre(string nombre )
+        public IEnumerable<InformacionOdsDetalle> ObtenerInformacionODSporNombre(string nombre)
         {
             try
             {
@@ -67,14 +67,14 @@ namespace Reconocimientos.Services
             }
         }
 
-        public IEnumerable<InformacionOdsDetalle> ObtenerInformacionODS()
+        public IEnumerable<InformacionOdsDetalle> ObtenerInformacionODS(string UserId, int CompanyId)
         {
             try
             {
                 using (IDbConnection con = new SqlConnection(_config["ConnectionStrings:DefaultConnection"]))
                 {
                     string query = _config["QuerysColaboradores:SelectMGA_PlazasMH"];
-                    return con.Query<InformacionOdsDetalle>(sql: query);
+                    return con.Query<InformacionOdsDetalle>(sql: query, new { UserId, CompanyId});
                 }
             }
             catch (Exception e)

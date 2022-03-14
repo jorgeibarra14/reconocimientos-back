@@ -10,7 +10,7 @@ namespace Reconocimientos.Interfaces
     {
         IEnumerable<InformacionOdsDetalle> ObtenerInformacionODSporId(string id_empleado);
         InformacionOdsDetalle ObtenerObjInformacionODSporId(string id_empleado);
-        IEnumerable<InformacionOdsDetalle> ObtenerInformacionODS();
+        IEnumerable<InformacionOdsDetalle> ObtenerInformacionODS(string userId, int companyId);
         IEnumerable<InformacionOdsDetalle> ObtenerInformacionODSporNombre(string nombre);
     }
 }

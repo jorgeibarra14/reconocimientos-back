@@ -184,6 +184,12 @@ C:\Users\jorge\Downloads\Reconocimientos\Reconocimientos\obj\Debug\netcoreapp3.1
 C:\Users\jorge\Downloads\Reconocimientos\Reconocimientos\obj\Debug\netcoreapp3.1\Reconocimientos.dll
 C:\Users\jorge\Downloads\Reconocimientos\Reconocimientos\obj\Debug\netcoreapp3.1\Reconocimientos.pdb
 C:\Users\jorge\Downloads\Reconocimientos\Reconocimientos\obj\Debug\netcoreapp3.1\Reconocimientos.genruntimeconfig.cache
+F:\reconocimientos-back\obj\Debug\netcoreapp3.1\Reconocimientos.csproj.AssemblyReference.cache
+F:\reconocimientos-back\obj\Debug\netcoreapp3.1\Reconocimientos.GeneratedMSBuildEditorConfig.editorconfig
+F:\reconocimientos-back\obj\Debug\netcoreapp3.1\Reconocimientos.AssemblyInfoInputs.cache
+F:\reconocimientos-back\obj\Debug\netcoreapp3.1\Reconocimientos.AssemblyInfo.cs
+F:\reconocimientos-back\obj\Debug\netcoreapp3.1\Reconocimientos.csproj.CoreCompileInputs.cache
+F:\reconocimientos-back\obj\Debug\netcoreapp3.1\Reconocimientos.MvcApplicationPartsAssemblyInfo.cache
 F:\reconocimientos-back\bin\Debug\netcoreapp3.1\appsettings.Development.json
 F:\reconocimientos-back\bin\Debug\netcoreapp3.1\appsettings.json
 F:\reconocimientos-back\bin\Debug\netcoreapp3.1\Reconocimientos.exe
@@ -233,12 +239,6 @@ F:\reconocimientos-back\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\S
 F:\reconocimientos-back\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
 F:\reconocimientos-back\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
 F:\reconocimientos-back\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
-F:\reconocimientos-back\obj\Debug\netcoreapp3.1\Reconocimientos.csproj.AssemblyReference.cache
-F:\reconocimientos-back\obj\Debug\netcoreapp3.1\Reconocimientos.GeneratedMSBuildEditorConfig.editorconfig
-F:\reconocimientos-back\obj\Debug\netcoreapp3.1\Reconocimientos.AssemblyInfoInputs.cache
-F:\reconocimientos-back\obj\Debug\netcoreapp3.1\Reconocimientos.AssemblyInfo.cs
-F:\reconocimientos-back\obj\Debug\netcoreapp3.1\Reconocimientos.csproj.CoreCompileInputs.cache
-F:\reconocimientos-back\obj\Debug\netcoreapp3.1\Reconocimientos.MvcApplicationPartsAssemblyInfo.cache
 F:\reconocimientos-back\obj\Debug\netcoreapp3.1\staticwebassets\Reconocimientos.StaticWebAssets.Manifest.cache
 F:\reconocimientos-back\obj\Debug\netcoreapp3.1\Reconocimientos.RazorTargetAssemblyInfo.cache
 F:\reconocimientos-back\obj\Debug\netcoreapp3.1\Reconocimientos.csproj.CopyComplete
