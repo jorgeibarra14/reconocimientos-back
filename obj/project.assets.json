@@ -5956,11 +5956,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jorge\\Downloads\\Reconocimientos\\Reconocimientos\\Reconocimientos.csproj",
+      "projectUniqueName": "F:\\reconocimientos-back\\Reconocimientos.csproj",
       "projectName": "Reconocimientos",
-      "projectPath": "C:\\Users\\jorge\\Downloads\\Reconocimientos\\Reconocimientos\\Reconocimientos.csproj",
+      "projectPath": "F:\\reconocimientos-back\\Reconocimientos.csproj",
       "packagesPath": "C:\\Users\\jorge\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jorge\\Downloads\\Reconocimientos\\Reconocimientos\\obj\\",
+      "outputPath": "F:\\reconocimientos-back\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jorge\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -6048,7 +6048,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

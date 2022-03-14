@@ -359,5 +359,11 @@ namespace Reconocimientos.Controllers
 
             return Ok(_reconocimientoservice.ValidarReconociminetoEntregado(pId_empleado_recibe, id_empleado_envia, activo));
         }
+
+        [HttpGet("ObtenerTopReconocidos")]
+        public IActionResult ObtenerTopReconocidos()
+        {
+            return Ok( _reconocimientoservice.ObtenerTopReconocidos());
+        }
     }
 }

@@ -275,5 +275,18 @@ namespace Reconocimientos.Services
                 throw new Exception(e.Message);
             }
         }
+
+        public IEnumerable<TopReconocimiento> ObtenerTopReconocidos()
+        {
+            try
+            {
+                string query = _config["QuerysReconocimientos:SelectTopReconocidos"];
+                return con.Query<TopReconocimiento>(sql: query);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }

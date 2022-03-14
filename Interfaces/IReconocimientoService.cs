@@ -37,5 +37,6 @@ namespace Reconocimientos.Interfaces
         int ObtenerAutorizador(string area, string sistema, string regional);
 
         int ValidarReconociminetoEntregado(string id_empleado_recibe, string id_empleado_envia, bool activo);
+        IEnumerable<TopReconocimiento> ObtenerTopReconocidos();
     }
 }

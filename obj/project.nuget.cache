@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Fv67LvdMI57dclCQBsIeTrqRqlbSJgmDXm4HW3CEZQQWnACBsJwU2jaYjlwWbHJpTWmELIEJ4j3AXs2ioMz/kA==",
+  "dgSpecHash": "PHBfwVNRCCV+C3TrH3ildOTjNX/86eCnc/AzBYcV8AWiaK4gZlZfDkWRteu6QuXLJvNu/zRFqx4sL2hRF1TTRQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\jorge\\Downloads\\Reconocimientos\\Reconocimientos\\Reconocimientos.csproj",
+  "projectFilePath": "F:\\reconocimientos-back\\Reconocimientos.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jorge\\.nuget\\packages\\dapper\\2.0.78\\dapper.2.0.78.nupkg.sha512",
     "C:\\Users\\jorge\\.nuget\\packages\\identity\\1.0.3\\identity.1.0.3.nupkg.sha512",

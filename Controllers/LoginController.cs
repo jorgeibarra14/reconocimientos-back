@@ -73,7 +73,7 @@ namespace Reconocimientos.Controllers
                 request.Headers.Add("Authorization", "Bearer " + login.Token);
                 request.ContentType = "application/json";
 
-                var itGovRequest = new {AppID = login.ApplicationId, UserID = login.UserId};
+                var itGovRequest = new {AppId = login.ApplicationId, UserId = login.UserId};
 
                 var itGovJson = JsonConvert.SerializeObject(itGovRequest);
 
