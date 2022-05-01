@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Reconocimientos.Interfaces;
 using Reconocimientos.Models;
 
@@ -49,9 +52,29 @@ namespace Reconocimientos.Controllers
 
         // GET: api/<CompetenciaController>/ObtenerCompetencias
         [HttpGet("ObtenerCompetencias")]
-        public ActionResult<IEnumerable<Competencias>> ObtenerCompetencias(bool activo,string nivel)
+        public ActionResult<IEnumerable<CompetencyViewModel>> ObtenerCompetencias(bool activo,string nivel)
         {
-            return Ok(_competenciaService.ObtenerCompetencias(activo,nivel));
+            // Create a request for the URL.
+            WebRequest request = WebRequest.Create(
+              "https://localhost:44357/api/Competencies/company/4");
+            // If required by the server, set the credentials.
+            request.Credentials = CredentialCache.DefaultCredentials;
+
+            // Get the response.
+            WebResponse response = request.GetResponse();
+            // Display the status.
+            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+            var res = new List<CompetencyViewModel>(); 
+            using (Stream dataStream = response.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(dataStream);
+
+                var stringRes = reader.ReadToEnd();
+                res = JsonConvert.DeserializeObject < List<CompetencyViewModel>>(stringRes);
+            }
+
+            response.Close();
+            return Ok(res);
         }
 
         // GET api/<CompetenciaController>/ObtenerCompetenciaId
