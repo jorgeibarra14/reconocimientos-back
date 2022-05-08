@@ -14,15 +14,18 @@ namespace Reconocimientos.Controllers
     {
         private readonly IPedidosService _pedidosService;
         private readonly IOdsService _odsService;
+        private readonly IReconocimientoService _reconocimientoService;
         private readonly IProductosService _productoservice;
 
         public PedidosController(IPedidosService pedidosService,
              IOdsService odsService,
-             IProductosService productoservice)
+             IProductosService productoservice,
+             IReconocimientoService reconocimientoService)
         {
             _pedidosService = pedidosService;
             _odsService = odsService;
             _productoservice = productoservice;
+            _reconocimientoService = reconocimientoService;
         }
 
         // GET: api/<PedidosController>/ObtenerPedidos
@@ -55,6 +58,7 @@ namespace Reconocimientos.Controllers
         {
 
             //Validar stock 
+            int totalPuntos = 0;
             foreach (ProductosPedido producto in pedido.productos)
             {
                 List<Productos> productoResult = (List<Productos>)_productoservice.getProductsById(producto.producto_id);
@@ -63,6 +67,7 @@ namespace Reconocimientos.Controllers
                 {
                     return BadRequest("No hay stock suficiente para realizar el pedido");
                 }
+                totalPuntos += producto.producto_costo;
             }
 
             //Traer datos del colaborador que solicita
@@ -75,6 +80,11 @@ namespace Reconocimientos.Controllers
             //Hacer el pedido
             var resultado = _pedidosService.InsertarPedidos(pedido);
 
+            var pedidoCelular = new PedidosCelular { Celular = pedido.celularEmpleado, IdPedido = resultado };
+            var respuestaCelular = _pedidosService.InsertarPedidoCelular(pedidoCelular);
+
+            var usuarioPuntos = new UsuariosPuntos { IdEmpleado = pedido.id_solicitante, Valor = totalPuntos * -1, Tipo = "Gasto", IdPedido = resultado };
+            var res = _reconocimientoService.InsertarPuntos(usuarioPuntos);
             //Descontar puntos
 
 

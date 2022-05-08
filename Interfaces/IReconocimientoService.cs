@@ -24,6 +24,7 @@ namespace Reconocimientos.Interfaces
 
         int InsertarReconocimiento(Models.Reconocimientos reconocimientos);
 
+        int InsertarPuntos(UsuariosPuntos usuariosPuntos);
         int EliminarReconocimiento(int id);
 
         IEnumerable<MisReconocimientos> MisReconocimientos(string id_empleado_recibe, bool activo);

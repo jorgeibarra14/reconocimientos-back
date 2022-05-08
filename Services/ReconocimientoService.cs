@@ -25,8 +25,8 @@ namespace Reconocimientos.Services
         {
             try
             {
-                string query = _config["QuerysReconocimientos:SelectPuntosAcumulados"];
-                return con.ExecuteScalar<int>(sql: query, new { IdEmpleadoRecibe = idempleadorecibe, Activo = activo });
+                string query = _config["QuerysUsuariosPuntos:ObtenerPuntos"];
+                return con.ExecuteScalar<int>(sql: query, new { IdEmpleado = idempleadorecibe});
             }
             catch (Exception e)
             {
@@ -56,6 +56,7 @@ namespace Reconocimientos.Services
                             IdEmpleadoAutorizador = reconocimientos.id_empleado_autorizador,
                             IdPuntos = reconocimientos.id_puntos
                         });
+                    con.Close();
                 }
 
                 return affectedRows;
@@ -226,6 +227,8 @@ namespace Reconocimientos.Services
 
         public IEnumerable<ReconocimientosEntregados> ReconocerAOtros(string id_empleado_envia, bool activo)
         {
+            
+            
             try
             {
                 string query = _config["QuerysReconocimientos:SelectReconocerAOtros"];
@@ -282,6 +285,35 @@ namespace Reconocimientos.Services
             {
                 string query = _config["QuerysReconocimientos:SelectTopReconocidos"];
                 return con.Query<TopReconocimiento>(sql: query);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public int InsertarPuntos(UsuariosPuntos usuariosPuntos)
+        {
+            try
+            {
+                var affectedRows = 0;
+                string query = _config["QuerysUsuariosPuntos:Insertar"];
+
+                using (IDbConnection con = new SqlConnection(_config["ConnectionStrings:DefaultConnection"]))
+                {
+                    con.Open();
+
+                    affectedRows = con.Execute(query,
+                        new
+                        {
+                            IdEmpleado = usuariosPuntos.IdEmpleado,
+                            Valor = usuariosPuntos.Valor,
+                            Tipo = usuariosPuntos.Tipo,
+                            IdPedido = usuariosPuntos.IdPedido
+                        });
+                }
+
+                return affectedRows;
             }
             catch (Exception e)
             {

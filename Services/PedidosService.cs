@@ -192,7 +192,8 @@ namespace Reconocimientos.Services
 
                         resultado = _estatusPedidosService.InsertarEstatusPedido(estatusPedido);
 
-                        result = resultado;
+                        // RETORNA ID DEL PEDIDO
+                        result = newId;
                     }
                     else
                     {
@@ -247,6 +248,34 @@ namespace Reconocimientos.Services
             {
                 throw new Exception(e.Message);
             }
+        }
+
+        public int InsertarPedidoCelular(PedidosCelular pedidosCelular)
+        {
+
+                try
+                {
+                    var affectedRows = 0;
+                    var query = _config["QuerysPedidosCelular:InsertarPedidoCelular"];
+
+                using (IDbConnection con = new SqlConnection(_config["ConnectionStrings:DefaultConnection"]))
+                {
+                        con.Open();
+
+                        affectedRows = con.Execute(query,
+                            new
+                            {
+                                IdPedido = pedidosCelular.IdPedido,
+                                Celular = pedidosCelular.Celular
+                            });
+                    }
+
+                    return affectedRows;
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
+                }           
         }
     }
 }

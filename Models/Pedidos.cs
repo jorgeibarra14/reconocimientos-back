@@ -20,5 +20,7 @@ namespace Reconocimientos.Models
         public DateTime fecha_creacion{ get; set; }
         public List<ProductosPedido> productos { get; set; }
         public EstatusPedido estatusPedido { get; set; }
+
+        public int celularEmpleado  { get; set; }
     }
 }
