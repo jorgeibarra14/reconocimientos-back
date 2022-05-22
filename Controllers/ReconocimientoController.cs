@@ -85,7 +85,7 @@ namespace Reconocimientos.Controllers
                 }
 
                 int contador = _reconocimientoservice.ValidarReconociminetoEntregado(reconocimiento.id_empleado_recibe, reconocimiento.id_empleado_envia, true);
-                if (contador > 0)
+                if (contador > 2)
                 {
                     return StatusCode((int)HttpStatusCode.OK, "Rechazo por sistema");
                 }
