@@ -74,7 +74,6 @@ namespace Reconocimientos.Controllers
                 // Pass the handler to httpclient(from you are calling api)
                 HttpClient client = new HttpClient(clientHandler);
                 var request = (HttpWebRequest) WebRequest.CreateHttp(Url);
-                //HttpWebRequest request = HttpWebRequest.CreateHttp(url);
                 request.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
                 request.Method = "POST";
                 request.Headers.Add("Authorization", "Bearer " + login.Token);

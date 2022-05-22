@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Reconocimientos.Interfaces;
 using Reconocimientos.Models;
@@ -16,9 +17,11 @@ namespace Reconocimientos.Controllers
     public class CompetenciaController : Controller
     {
         private readonly ICompetenciaService _competenciaService;
+        private readonly IConfiguration _configuration;
 
-        public CompetenciaController(ICompetenciaService competenciaService)
+        public CompetenciaController(ICompetenciaService competenciaService, IConfiguration configuration)
         {
+            _configuration = configuration;
             _competenciaService = competenciaService;
         }
 
@@ -54,9 +57,12 @@ namespace Reconocimientos.Controllers
         [HttpGet("ObtenerCompetencias")]
         public ActionResult<IEnumerable<CompetencyViewModel>> ObtenerCompetencias(bool activo,string nivel)
         {
+            var ITGovUrlApi = _configuration.GetSection("UrlApis").GetValue<string>("ITGovAPI");
+            var Url = ITGovUrlApi + "/Competencies/company/4";
             // Create a request for the URL.
-            WebRequest request = WebRequest.Create(
-              "https://localhost:44357/api/Competencies/company/4");
+            var request = WebRequest.CreateHttp(Url);
+
+            request.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
             // If required by the server, set the credentials.
             request.Credentials = CredentialCache.DefaultCredentials;
 
