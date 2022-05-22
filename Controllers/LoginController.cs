@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,8 +68,14 @@ namespace Reconocimientos.Controllers
                 var ReconocimientosUrlApp = _configuration.GetSection("UrlApps").GetValue<string>("ReconocimientosApp");
                 var ITGovUrlApi = _configuration.GetSection("UrlApis").GetValue<string>("ITGovAPI");
                 var Url = ITGovUrlApi + "/user/itgov";
+                HttpClientHandler clientHandler = new HttpClientHandler();
+                clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
 
-                var request = (HttpWebRequest) WebRequest.Create(Url);
+                // Pass the handler to httpclient(from you are calling api)
+                HttpClient client = new HttpClient(clientHandler);
+                var request = (HttpWebRequest) WebRequest.CreateHttp(Url);
+                //HttpWebRequest request = HttpWebRequest.CreateHttp(url);
+                request.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
                 request.Method = "POST";
                 request.Headers.Add("Authorization", "Bearer " + login.Token);
                 request.ContentType = "application/json";
