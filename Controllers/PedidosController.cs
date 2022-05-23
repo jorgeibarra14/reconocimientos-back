@@ -16,16 +16,18 @@ namespace Reconocimientos.Controllers
         private readonly IOdsService _odsService;
         private readonly IReconocimientoService _reconocimientoService;
         private readonly IProductosService _productoservice;
+        private readonly IPuntosService _puntosService;
 
         public PedidosController(IPedidosService pedidosService,
              IOdsService odsService,
              IProductosService productoservice,
-             IReconocimientoService reconocimientoService)
+             IReconocimientoService reconocimientoService, IPuntosService puntosService)
         {
             _pedidosService = pedidosService;
             _odsService = odsService;
             _productoservice = productoservice;
             _reconocimientoService = reconocimientoService;
+            _puntosService = puntosService;
         }
 
         // GET: api/<PedidosController>/ObtenerPedidos
@@ -84,7 +86,7 @@ namespace Reconocimientos.Controllers
             var respuestaCelular = _pedidosService.InsertarPedidoCelular(pedidoCelular);
 
             var usuarioPuntos = new UsuariosPuntos { IdEmpleado = pedido.id_solicitante, Valor = totalPuntos * -1, Tipo = "Gasto", IdPedido = resultado };
-            var res = _reconocimientoService.InsertarPuntos(usuarioPuntos);
+            var res = _puntosService.InsertarPuntosTienda(usuarioPuntos);
             //Descontar puntos
 
 

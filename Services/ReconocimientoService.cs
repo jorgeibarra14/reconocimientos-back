@@ -291,34 +291,5 @@ namespace Reconocimientos.Services
                 throw new Exception(e.Message);
             }
         }
-
-        public int InsertarPuntos(UsuariosPuntos usuariosPuntos)
-        {
-            try
-            {
-                var affectedRows = 0;
-                string query = _config["QuerysUsuariosPuntos:Insertar"];
-
-                using (IDbConnection con = new SqlConnection(_config["ConnectionStrings:DefaultConnection"]))
-                {
-                    con.Open();
-
-                    affectedRows = con.Execute(query,
-                        new
-                        {
-                            IdEmpleado = usuariosPuntos.IdEmpleado,
-                            Valor = usuariosPuntos.Valor,
-                            Tipo = usuariosPuntos.Tipo,
-                            IdPedido = usuariosPuntos.IdPedido
-                        });
-                }
-
-                return affectedRows;
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
     }
 }
