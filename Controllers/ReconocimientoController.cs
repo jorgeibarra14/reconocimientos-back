@@ -120,14 +120,37 @@ namespace Reconocimientos.Controllers
         [HttpPost("AprobarReconocimiento")]
         public IActionResult AprobarReconocimiento([FromBody] Models.Reconocimientos reconocimiento)
         {
-            return Ok(_reconocimientoservice.AprobarRechazarReconocimiento(reconocimiento));
+            var result = 0;
+            if(reconocimiento.tipo == 1)
+            {
+                result = _reconocimientoservice.AprobarRechazarReconocimiento(reconocimiento);
+            } else
+            {
+                //result = _reconocimientoservice.AprobarPuntosConcepto(reconocimiento)
+            }
+            return Ok(result);
         }
 
         // POST api/<ReconocimientoController>/RechazarReconocimiento
         [HttpPost("RechazarReconocimiento")]
         public IActionResult RechazarReconocimiento([FromBody] Models.Reconocimientos reconocimiento)
         {
-            return Ok(_reconocimientoservice.AprobarRechazarReconocimiento(reconocimiento));
+            var result = 0;
+            if (reconocimiento.tipo == 1 || reconocimiento.tipo == 0)
+            {
+                result = _reconocimientoservice.AprobarRechazarReconocimiento(reconocimiento);
+            }
+            else
+            {
+                if(reconocimiento.aprobado)
+                {
+                    result = _reconocimientoservice.AprobarPuntosConcepto(reconocimiento);
+                } else
+                {
+                    result = _reconocimientoservice.RechazarPuntosConcepto(reconocimiento);
+                }
+            }
+            return Ok(result);
         }
 
         // POST api/<ReconocimientoController>/EliminarReconocimiento

@@ -291,5 +291,61 @@ namespace Reconocimientos.Services
                 throw new Exception(e.Message);
             }
         }
+
+        public int AprobarPuntosConcepto(Models.Reconocimientos reconocimiento)
+        {
+            try
+            {
+                var affectedRows = 0;
+                string query = _config["QuerysUsuariosPuntos:ActivarPuntosConceptos"];
+
+                using (con)
+                {
+                    con.Open();
+
+                    affectedRows = con.Execute(query,
+                        new
+                        {
+                            Id = reconocimiento.id,
+                            Activo = reconocimiento.activo
+                        });
+                    con.Close();
+                }
+
+                return affectedRows;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public int RechazarPuntosConcepto(Models.Reconocimientos reconocimiento)
+        {
+            try
+            {
+                var affectedRows = 0;
+                string query = _config["QuerysUsuariosPuntos:RechzarPuntosConceptos"];
+
+                using (con)
+                {
+                    con.Open();
+
+                    affectedRows = con.Execute(query,
+                        new
+                        {
+                            Id = reconocimiento.id,
+                            ConceptoRechazo = reconocimiento.comentario_resolucion
+                        });
+                    con.Close();
+                }
+
+                return affectedRows;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }

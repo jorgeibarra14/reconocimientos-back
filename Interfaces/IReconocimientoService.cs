@@ -39,5 +39,7 @@ namespace Reconocimientos.Interfaces
 
         int ValidarReconociminetoEntregado(string id_empleado_recibe, string id_empleado_envia, bool activo);
         IEnumerable<TopReconocimiento> ObtenerTopReconocidos();
+        int AprobarPuntosConcepto(Models.Reconocimientos reconocimiento);
+        int RechazarPuntosConcepto(Models.Reconocimientos reconocimiento);
     }
 }
