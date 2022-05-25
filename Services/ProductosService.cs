@@ -79,7 +79,8 @@ namespace Reconocimientos.Services
                             Costo=productos.costo,
                             Stock=productos.stock,
                             Imagen = productos.imagen,
-                            Categoria_id= productos.categoria_id
+                            Categoria_id= productos.categoria_id,
+                            Notas= productos.notas
                         });
                 }
 
@@ -95,6 +96,7 @@ namespace Reconocimientos.Services
         {
             try
             {
+                Console.WriteLine(productos);
                 var affectedRows = 0;
                 using (IDbConnection con = new SqlConnection(_config["ConnectionStrings:DefaultConnection"]))
                 {
@@ -108,7 +110,8 @@ namespace Reconocimientos.Services
                             Stock = productos.stock,
                             Imagen = productos.imagen,
                             Categoria_id = productos.categoria_id,
-                            Activo = Convert.ToInt32(productos.activo)
+                            Activo = Convert.ToInt32(productos.activo),
+                            Notas = productos.notas
                         });
                 }
 
