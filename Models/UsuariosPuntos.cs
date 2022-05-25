@@ -7,6 +7,8 @@ namespace Reconocimientos.Models
         public int Id { get; set; }
 
         public string IdEmpleado { get; set; }
+        public string IdEmpleadoOtorga { get; set; }
+
 
         public int Valor { get; set; }
 
@@ -15,6 +17,9 @@ namespace Reconocimientos.Models
         public DateTime FechaCreacion { get; set; }
 
         public int IdPedido { get; set; }
+        public int ConceptoId { get; set; }
+        public string Justificacion { get; set; }
+        public bool Activo { get; set; }
 
     }
 }

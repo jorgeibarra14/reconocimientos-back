@@ -22,5 +22,7 @@ namespace Reconocimientos.Interfaces
 
         int CorteManualDePuntos();
 
+        int InsertarPuntosTienda(UsuariosPuntos usuariosPuntos);
+
     }
 }

@@ -105,7 +105,7 @@ namespace Reconocimientos.Controllers
                     }
                     var usuarioPuntos = new UsuariosPuntos{ IdEmpleado = reconocimiento.id_empleado_recibe, Valor = 15, Tipo = "Reconocimiento", IdPedido=0};
                     
-                    _reconocimientoservice.InsertarPuntos(usuarioPuntos);
+                    _puntoService.InsertarPuntosTienda(usuarioPuntos);
                     return Ok(_reconocimientoservice.InsertarReconocimiento(reconocimiento));
                 }
 
@@ -368,5 +368,6 @@ namespace Reconocimientos.Controllers
         {
             return Ok( _reconocimientoservice.ObtenerTopReconocidos());
         }
+
     }
 }

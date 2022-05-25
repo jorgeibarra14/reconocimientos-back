@@ -66,5 +66,15 @@ namespace Reconocimientos.Controllers
         {
             return Ok(_puntoService.CorteManualDePuntos());
         }
+
+        [HttpPost("agregarPuntosTienda")]
+
+        public IActionResult AgregarPuntos([FromBody] UsuariosPuntos usuariosPuntos)
+        {
+            var usuarioPuntos = new UsuariosPuntos { IdEmpleado = usuariosPuntos.IdEmpleado, Valor = usuariosPuntos.Valor, Tipo = usuariosPuntos.Tipo, IdPedido = 0, Justificacion = usuariosPuntos.Justificacion, ConceptoId = usuariosPuntos.ConceptoId, IdEmpleadoOtorga = usuariosPuntos.IdEmpleadoOtorga };
+
+
+            return Ok(_puntoService.InsertarPuntosTienda(usuarioPuntos));
+        }
     }
 }
