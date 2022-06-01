@@ -112,6 +112,8 @@ namespace Reconocimientos.Controllers
                                 NivelPuesto = user.JobLevel,
                                 Id = user.UserId,
                                 Role = r,
+                                IsAdminAck = user.IsAdminAck,
+                                IsAdminStore = user.IsAdminStore,
                                 AppId = int.Parse(login.ApplicationId),
 
                             };
@@ -147,7 +149,11 @@ namespace Reconocimientos.Controllers
                     new Claim("RolId", appConfig.Usuario.Role.Id.ToString() != null ? appConfig.Usuario.Role.Id.ToString() : ""),
                     new Claim("Email", appConfig.Usuario.Email != null ? appConfig.Usuario.Email  : ""),
                     new Claim("Puesto", appConfig.Usuario.Puesto != null ? appConfig.Usuario.Puesto  : ""),
-                    new Claim("NivelPuesto", appConfig.Usuario.NivelPuesto != null ? appConfig.Usuario.NivelPuesto  : "")
+                    new Claim("NivelPuesto", appConfig.Usuario.NivelPuesto != null ? appConfig.Usuario.NivelPuesto  : ""),
+                    new Claim("IsAdminAck", appConfig.Usuario.IsAdminAck.ToString()),
+                    new Claim("IsAdminStore", appConfig.Usuario.IsAdminStore.ToString()),
+
+
 
                 };
 

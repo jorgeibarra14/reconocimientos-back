@@ -277,5 +277,46 @@ namespace Reconocimientos.Services
                     throw new Exception(e.Message);
                 }           
         }
+
+        public List<Pedidos> ObtenerPedidosByUser(string userId)
+        {
+            bool activo = true;
+            try
+            {
+                using (IDbConnection con = new SqlConnection(_config["ConnectionStrings:DefaultConnection"]))
+                {
+                    var query = _config["QuerysPedidos:SelectPedidosByUserId"];
+                    //return con.Query<Pedidos>(query, new { Activo = activo });
+
+                    var result = (List<Pedidos>)con.Query<Pedidos>(query, new { Activo = activo, UserId = userId });
+
+                    foreach (Pedidos item in result)
+                    {
+                        var resultProductos = (List<ProductosPedido>)con.Query<ProductosPedido>(sql: _config["QuerysProductosPedido:SelectProductosPedidoId"],
+                            new { IdPedido = item.id, Activo = activo });
+
+                        item.productos = resultProductos;
+
+                        List<EstatusPedido> resultEsatusPedido = (List<EstatusPedido>)con.Query<EstatusPedido>(sql: _config["QuerysEstatusPedido:SelectEstatusPedidoId"],
+                            new { IdPedido = item.id, Activo = activo });
+
+                        item.estatusPedido = new EstatusPedido()
+                        {
+                            id = resultEsatusPedido[0].id,
+                            id_pedido = resultEsatusPedido[0].id_pedido,
+                            estado = resultEsatusPedido[0].estado,
+                            activo = resultEsatusPedido[0].activo,
+                            fecha_creacion = resultEsatusPedido[0].fecha_creacion
+                        };
+                    }
+
+                    return result;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }

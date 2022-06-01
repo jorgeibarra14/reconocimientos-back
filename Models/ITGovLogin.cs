@@ -32,6 +32,8 @@ namespace Reconocimientos.Models
         public string Oficina { get; set; }
         public string Fullname => Nombre + " " + Paterno + " " + Materno;
         public string Foto { get; set; }
+        public bool IsAdminAck { get; set; }
+        public bool IsAdminStore { get; set; }
     }
 
     public class Role

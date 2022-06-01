@@ -38,6 +38,12 @@ namespace Reconocimientos.Controllers
             return Ok(pedidos);
         }
 
+        [HttpGet("ObtenerPedidos/{userId}")]
+        public ActionResult<IEnumerable<Pedidos>> ObtenerPedidos(string userId)
+        {
+            List<Pedidos> pedidos = (List<Pedidos>)_pedidosService.ObtenerPedidosByUser(userId);
+            return Ok(pedidos);
+        }
         // GET api/<PedidosController>/ObtenerPedidosId
         [HttpGet("ObtenerPedidosId")]
         public ActionResult<IEnumerable<Pedidos>> ObtenerPedidosId(int id)

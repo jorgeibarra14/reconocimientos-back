@@ -10,6 +10,8 @@
         public string Avatar = "assets/images/avatars/brian-hughes.jpg";
         public string JobTitle { get; set; }
         public string JobLevel { get; set; }
+        public bool IsAdminAck { get; set; }
+        public bool IsAdminStore { get; set; }
 
     }
 }

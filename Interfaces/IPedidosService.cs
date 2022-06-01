@@ -16,5 +16,6 @@ namespace Reconocimientos.Interfaces
 
         int EliminarPedidos(int id);
         int InsertarPedidoCelular(PedidosCelular pedidosCelular);
+        List<Pedidos> ObtenerPedidosByUser(string userId);
     }
 }
