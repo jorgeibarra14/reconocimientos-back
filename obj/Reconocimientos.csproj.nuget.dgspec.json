@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\reconocimientos-back\\Reconocimientos.csproj": {}
+    "C:\\Users\\AdG\\Documents\\Ant-Work\\Troonks\\reconocimientos-back\\Reconocimientos.csproj": {}
   },
   "projects": {
-    "E:\\reconocimientos-back\\Reconocimientos.csproj": {
+    "C:\\Users\\AdG\\Documents\\Ant-Work\\Troonks\\reconocimientos-back\\Reconocimientos.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\reconocimientos-back\\Reconocimientos.csproj",
+        "projectUniqueName": "C:\\Users\\AdG\\Documents\\Ant-Work\\Troonks\\reconocimientos-back\\Reconocimientos.csproj",
         "projectName": "Reconocimientos",
-        "projectPath": "E:\\reconocimientos-back\\Reconocimientos.csproj",
-        "packagesPath": "C:\\Users\\jorge\\.nuget\\packages\\",
-        "outputPath": "E:\\reconocimientos-back\\obj\\",
+        "projectPath": "C:\\Users\\AdG\\Documents\\Ant-Work\\Troonks\\reconocimientos-back\\Reconocimientos.csproj",
+        "packagesPath": "C:\\Users\\AdG\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\AdG\\Documents\\Ant-Work\\Troonks\\reconocimientos-back\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\jorge\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\AdG\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

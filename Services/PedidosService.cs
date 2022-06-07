@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using Dapper;
 using Microsoft.Extensions.Configuration;
 using Reconocimientos.Interfaces;
@@ -33,30 +34,29 @@ namespace Reconocimientos.Services
             {
                 using (IDbConnection con = new SqlConnection(_config["ConnectionStrings:DefaultConnection"]))
                 {
-                    var query = _config["QuerysPedidos:SelectAllPedidos"];
-                    //return con.Query<Pedidos>(query, new { Activo = activo });
+                    var query = _config["QuerysPedidos:SelectAllProductosPedidoNuevo"];
 
-                    var result = (List<Pedidos>)con.Query<Pedidos>(query, new { Activo = activo });
+                    var result = con.Query<Pedidos>(query, new { Activo = activo }).ToList();
 
-                    foreach (Pedidos item in result)
-                    {
-                        var resultProductos = (List<ProductosPedido>)con.Query<ProductosPedido>(sql: _config["QuerysProductosPedido:SelectProductosPedidoId"],
-                            new { IdPedido = item.id, Activo = activo });
-
-                        item.productos = resultProductos;
-
-                        List<EstatusPedido> resultEsatusPedido = (List<EstatusPedido>)con.Query<EstatusPedido>(sql: _config["QuerysEstatusPedido:SelectEstatusPedidoId"],
-                            new { IdPedido = item.id, Activo = activo });
-
-                        item.estatusPedido = new EstatusPedido()
-                        {
-                            id = resultEsatusPedido[0].id,
-                            id_pedido = resultEsatusPedido[0].id_pedido,
-                            estado = resultEsatusPedido[0].estado,
-                            activo = resultEsatusPedido[0].activo,
-                            fecha_creacion = resultEsatusPedido[0].fecha_creacion
-                        };
-                    }
+                    // foreach (Pedidos item in result)
+                    // {
+                    //     var resultProductos = (List<ProductosPedido>)con.Query<ProductosPedido>(sql: _config["QuerysProductosPedido:SelectProductosPedidoId"],
+                    //         new { IdPedido = item.id, Activo = activo });
+                    //
+                    //     item.productos = resultProductos;
+                    //
+                    //     List<EstatusPedido> resultEsatusPedido = (List<EstatusPedido>)con.Query<EstatusPedido>(sql: _config["QuerysEstatusPedido:SelectEstatusPedidoId"],
+                    //         new { IdPedido = item.id, Activo = activo });
+                    //
+                    //     item.estatusPedido = new EstatusPedido()
+                    //     {
+                    //         id = resultEsatusPedido[0].id,
+                    //         id_pedido = resultEsatusPedido[0].id_pedido,
+                    //         estado = resultEsatusPedido[0].estado,
+                    //         activo = resultEsatusPedido[0].activo,
+                    //         fecha_creacion = resultEsatusPedido[0].fecha_creacion
+                    //     };
+                    // }
 
                     return result;
                 }
