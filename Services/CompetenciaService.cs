@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
+using System.Net;
 using Dapper;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using Reconocimientos.Interfaces;
 using Reconocimientos.Models;
 
@@ -141,6 +144,34 @@ namespace Reconocimientos.Services
             {
                 throw new Exception(e.Message);
             }
+        }
+
+        public IEnumerable<CompetencyViewModel> obtenerCompetenciasITGov()
+        {
+            var ITGovUrlApi = _config.GetSection("UrlApis").GetValue<string>("ITGovAPI");
+            var Url = ITGovUrlApi + "/Competencies/company/4";
+            // Create a request for the URL.
+            var request = WebRequest.CreateHttp(Url);
+
+            request.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+            // If required by the server, set the credentials.
+            request.Credentials = CredentialCache.DefaultCredentials;
+
+            // Get the response.
+            WebResponse response = request.GetResponse();
+            // Display the status.
+            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+            var res = new List<CompetencyViewModel>();
+            using (Stream dataStream = response.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(dataStream);
+
+                var stringRes = reader.ReadToEnd();
+                res = JsonConvert.DeserializeObject<List<CompetencyViewModel>>(stringRes);
+            }
+
+            response.Close();
+            return res;
         }
     }
 }

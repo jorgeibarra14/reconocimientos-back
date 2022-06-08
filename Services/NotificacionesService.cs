@@ -167,11 +167,14 @@ namespace Reconocimientos.Services
             {
                 var mimeMessage = new MimeMessage();
                 EmailMessage message = new EmailMessage();
+                List<string> receiver = new List<string>();
+                receiver.Add("jorge.ibarra.ms@gmail.com");
+                message.Sender = new MailboxAddress("Talent Suite Urrea", _emailConfig.From);
+                //message.Reciever = notificacion.ToMail;
+                message.Reciever = receiver;
 
-                message.Sender = new MailboxAddress("Reconocimientos Megacable", _emailConfig.From);
-                message.Reciever = notificacion.ToMail;
-                message.Bcc = notificacion.Cco;
-                message.CC = notificacion.Cc;
+                //message.Bcc = notificacion.Cco;
+                //message.CC = notificacion.Cc;
                 message.Subject = notificacion.Subject;
 
                 switch (notificacion.TipoEvento)
@@ -190,7 +193,7 @@ namespace Reconocimientos.Services
                     {
                         smtpClient.Connect(_emailConfig.SmtpServer, _emailConfig.Port, true);
                         smtpClient.Authenticate(_emailConfig.UserName, _emailConfig.Password);
-                        smtpClient.AuthenticationMechanisms.Remove("XOAUTH2");
+                        //smtpClient.AuthenticationMechanisms.Remove("XOAUTH2");
                         smtpClient.Send(mimeMessage);
                         smtpClient.Disconnect(true);
                     }
