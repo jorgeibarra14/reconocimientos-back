@@ -130,6 +130,8 @@ namespace Reconocimientos.Controllers
                         correoNotificacion.reconocimientoaprobado.competencia_id = c.Id.ToString();
                         correoNotificacion.reconocimientoaprobado.competencia_nombre = c.Name;
                         correoNotificacion.reconocimientoaprobado.competencia_descripcion = c.Description;
+                        correoNotificacion.reconocimientoaprobado.recibe = usuario[0].NombreCompleto;
+
                         correoNotificacion.reconocimientoaprobado.nombre_quien_envia = notificacion.descripcion;
                         correoNotificacion.reconocimientoaprobado.comentario = reconocimiento[0].motivo + " y " + reconocimiento[0].logro;
 

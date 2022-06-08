@@ -8,5 +8,6 @@
         public string Area { get; set; }
         public int Total { get; set; }
         public int Top { get; set; }
+        public string Avatar { get; set; }
     }
 }

@@ -115,6 +115,7 @@ namespace Reconocimientos.Controllers
                                 IsAdminAck = user.IsAdminAck,
                                 IsAdminStore = user.IsAdminStore,
                                 AppId = int.Parse(login.ApplicationId),
+                                Avatar = user.Avatar
 
                             };
 
@@ -141,6 +142,7 @@ namespace Reconocimientos.Controllers
                 var claims = new List<Claim>
                 {
                     new Claim("AppId", appConfig.Usuario.AppId.ToString() != null ? appConfig.Usuario.AppId.ToString()  : ""),
+                    new Claim("Avatar", appConfig.Usuario.Avatar.ToString() != null ? appConfig.Usuario.Avatar.ToString()  : ""),
                     new Claim("Id", appConfig.Usuario.Id != null ? appConfig.Usuario.Id  : ""),
                     new Claim("Nombre", appConfig.Usuario.Nombre != null ? appConfig.Usuario.Nombre  : ""),
                     new Claim("Paterno", appConfig.Usuario.Paterno != null ? appConfig.Usuario.Paterno  : ""),
