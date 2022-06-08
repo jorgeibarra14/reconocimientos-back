@@ -124,6 +124,7 @@ namespace Reconocimientos.Controllers
             if(reconocimiento.tipo == 1)
             {
                 result = _reconocimientoservice.AprobarRechazarReconocimiento(reconocimiento);
+                var aprobarPuntos = _reconocimientoservice.AprobarPuntosConcepto(reconocimiento);
             } else
             {
                 //result = _reconocimientoservice.AprobarPuntosConcepto(reconocimiento)
@@ -238,16 +239,16 @@ namespace Reconocimientos.Controllers
         {
             List<MisReconocimientos> misReconocimientos = (List<MisReconocimientos>)_reconocimientoservice.MisReconocimientos(id_empleado_recibe, activo);
             List<InformacionOdsDetalle> empleado = _odsService.ObtenerInformacionODSporId(id_empleado_recibe).ToList();
-            List<Competencias> listaCompetencoas = (List<Competencias>)_competenciaService.ObtenerCompetencias(activo, empleado[0].NivelPuesto);
+            List<CompetencyViewModel> listaCompetencoas = _competenciaService.obtenerCompetenciasITGov().ToList();
 
             foreach (MisReconocimientos item in misReconocimientos)
             {
-                foreach (Competencias itemCompetencia in listaCompetencoas)
+                foreach (CompetencyViewModel itemCompetencia in listaCompetencoas)
                 {
-                    if (item.nombre == itemCompetencia.nombre)
+                    if (item.nombre == itemCompetencia.Name)
                     {
 
-                        item.img = itemCompetencia.img;
+                        item.img = itemCompetencia.Img;
                     }
                 }
             }
@@ -283,16 +284,16 @@ namespace Reconocimientos.Controllers
         {
             List<ReconocimientosEntregados> reconocimientosentregados = (List<ReconocimientosEntregados>)_reconocimientoservice.ReconocerAOtros(id_empleado_envia, activo);
             List<InformacionOdsDetalle> empleado = _odsService.ObtenerInformacionODSporId(id_empleado_envia).ToList();
-            List<Competencias> listaCompetencias = (List<Competencias>)_competenciaService.ObtenerCompetencias(activo, empleado[0].NivelPuesto);
+            List<CompetencyViewModel> listaCompetencoas = _competenciaService.obtenerCompetenciasITGov().ToList();
 
             foreach (ReconocimientosEntregados item in reconocimientosentregados)
             {
-                foreach (Competencias itemCompetencia in listaCompetencias)
+                foreach (CompetencyViewModel itemCompetencia in listaCompetencoas)
                 {
-                    if (item.nombre == itemCompetencia.nombre)
+                    if (item.nombre == itemCompetencia.Name)
                     {
 
-                        item.img = itemCompetencia.img;
+                        item.img = itemCompetencia.Img;
                     }
                 }
             }

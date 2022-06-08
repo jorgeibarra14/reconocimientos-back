@@ -87,12 +87,12 @@ namespace Reconocimientos.Controllers
                 //List<Usuario> usuario = (List<Usuario>)await ObtenerEmpleadosPorId(notificacion.id_empleado.ToString());
                 List<InformacionOdsDetalle> usuario = (List<InformacionOdsDetalle>)await ObtenerEmpleadosPorId(notificacion.id_empleado.ToString());
 
-                if (string.IsNullOrEmpty(usuario[0].Email))
-                {
-                    return StatusCode((int)HttpStatusCode.OK, "No existe email registrado para notificar al empleado");
-                }
-                else
-                {
+                //if (string.IsNullOrEmpty(usuario[0].Email))
+                //{
+                //    //return StatusCode((int)HttpStatusCode.OK, "No existe email registrado para notificar al empleado");
+                //}
+                //else
+                //{
                     if (notificacion.titulo == "Denegado")
                     {
                         correoNotificacion.ToMail = new List<string>();
@@ -114,9 +114,11 @@ namespace Reconocimientos.Controllers
                             return StatusCode((int)HttpStatusCode.OK, "Reconocimiento no encontrado, no se envio notificación por correo");
                         }
 
-                        List<Competencias> competencia = (List<Competencias>)_competenciaService.ObtenerCompetenciaId(reconocimiento[0].id_competencia);
+                    List<CompetencyViewModel> competencia = (List<CompetencyViewModel>)_competenciaService.obtenerCompetenciasITGov().ToList();
 
-                        if (competencia[0].id <= 0)
+                    var c = competencia.Find(c => c.Id == reconocimiento[0].id_competencia);
+
+                    if (c.Id <= 0)
                         {
                             return StatusCode((int)HttpStatusCode.OK, "Competencia no encontrada, no se envio notificación por correo");
                         }
@@ -125,9 +127,9 @@ namespace Reconocimientos.Controllers
                         correoNotificacion.ToMail.Add(usuario[0].Email);
 
                         correoNotificacion.reconocimientoaprobado = new ReconocimientoAprobado();
-                        correoNotificacion.reconocimientoaprobado.competencia_id = competencia[0].id.ToString();
-                        correoNotificacion.reconocimientoaprobado.competencia_nombre = competencia[0].nombre;
-                        correoNotificacion.reconocimientoaprobado.competencia_descripcion = competencia[0].descripcion;
+                        correoNotificacion.reconocimientoaprobado.competencia_id = c.Id.ToString();
+                        correoNotificacion.reconocimientoaprobado.competencia_nombre = c.Name;
+                        correoNotificacion.reconocimientoaprobado.competencia_descripcion = c.Description;
                         correoNotificacion.reconocimientoaprobado.nombre_quien_envia = notificacion.descripcion;
                         correoNotificacion.reconocimientoaprobado.comentario = reconocimiento[0].motivo + " y " + reconocimiento[0].logro;
 
@@ -135,7 +137,7 @@ namespace Reconocimientos.Controllers
                         correoNotificacion.Subject = notificacion.titulo;
 
                     }
-                }
+                //}
 
                 return Ok(_notificacionesService.EnviarNotificacion(correoNotificacion));
             }
