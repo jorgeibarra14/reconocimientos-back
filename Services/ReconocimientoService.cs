@@ -26,7 +26,7 @@ namespace Reconocimientos.Services
             try
             {
                 string query = _config["QuerysUsuariosPuntos:ObtenerPuntos"];
-                return con.ExecuteScalar<int>(sql: query, new { IdEmpleado = idempleadorecibe});
+                return con.Query<int>(sql: query, new { IdEmpleado = idempleadorecibe}).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -41,11 +41,10 @@ namespace Reconocimientos.Services
                 var affectedRows = 0;
                 string query = _config["QuerysReconocimientos:InsertReconocimiento"];
 
-                using (con)
+                using (IDbConnection con = new SqlConnection(_config["ConnectionStrings:DefaultConnection"]))
                 {
                     con.Open();
-
-                    affectedRows = con.Execute(query,
+                    var result = con.ExecuteScalar(query + " SELECT SCOPE_IDENTITY()",
                         new
                         {
                             IdEmpleadoEnvia = reconocimientos.id_empleado_envia,
@@ -57,6 +56,7 @@ namespace Reconocimientos.Services
                             IdPuntos = reconocimientos.id_puntos
                         });
                     con.Close();
+                    affectedRows = Convert.ToInt32(result);
                 }
 
                 return affectedRows;
@@ -300,6 +300,34 @@ namespace Reconocimientos.Services
                 string query = _config["QuerysUsuariosPuntos:ActivarPuntosConceptos"];
 
                 using (con)
+                {
+                    con.Open();
+
+                    affectedRows = con.Execute(query,
+                        new
+                        {
+                            Id = reconocimiento.id,
+                            Activo = reconocimiento.activo
+                        });
+                    con.Close();
+                }
+
+                return affectedRows;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public int AprobarPuntosPorReconocimientoId(Models.Reconocimientos reconocimiento)
+        {
+            try
+            {
+                var affectedRows = 0;
+                string query = _config["QuerysUsuariosPuntos:ActivarPuntosPorReconocimientoId"];
+
+                using (IDbConnection con = new SqlConnection(_config["ConnectionStrings:DefaultConnection"]))
                 {
                     con.Open();
 

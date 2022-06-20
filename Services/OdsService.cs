@@ -67,6 +67,22 @@ namespace Reconocimientos.Services
             }
         }
 
+        public IEnumerable<InformacionOdsDetalle> GetAllUsers()
+        {
+            try
+            {
+                using (IDbConnection con = new SqlConnection(_config["ConnectionStrings:DefaultConnection"]))
+                {
+                    string query = _config["QuerysColaboradores:SelectAllUsers"];
+                    return con.Query<InformacionOdsDetalle>(sql: query);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
         public IEnumerable<InformacionOdsDetalle> ObtenerInformacionODS(string UserId, int CompanyId)
         {
             try

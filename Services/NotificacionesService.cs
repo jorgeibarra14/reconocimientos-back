@@ -169,6 +169,8 @@ namespace Reconocimientos.Services
                 EmailMessage message = new EmailMessage();
                 List<string> receiver = new List<string>();
                 receiver.Add("jorge.ibarra.ms@gmail.com");
+                receiver.Add("jorge.ibarra14@outlook.com");
+
                 message.Sender = new MailboxAddress("Talent Suite Urrea", _emailConfig.From);
                 //message.Reciever = notificacion.ToMail;
                 message.Reciever = receiver;
@@ -256,7 +258,7 @@ namespace Reconocimientos.Services
 
             foreach (var t in templates)
             {             
-                    if (t.Contains("Notificacion-Aceptado"))
+                    if (t.Contains("nuevo"))
                     {
                         templeteUrl = t;
                     }                         
@@ -267,33 +269,36 @@ namespace Reconocimientos.Services
             using (System.IO.StreamReader SourceReader = System.IO.File.OpenText(templeteUrl))
             {
                 msg = SourceReader.ReadToEnd();
-                msg = msg.Replace("{{competencia_id}}", $"{reconocimiento.competencia_id}");
-                msg = msg.Replace("{{competencia_nombre}}", $"{reconocimiento.competencia_nombre}");
-                msg = msg.Replace("{{competencia_descripcion}}", $"{reconocimiento.competencia_descripcion}");
-                msg = msg.Replace("{{nombre_quien_envia}}", $"{reconocimiento.nombre_quien_envia}");
+                //msg = msg.Replace("{{competencia_id}}", $"{reconocimiento.competencia_id}");
+                msg = msg.Replace("{{competencia}}", $"{reconocimiento.competencia_nombre}");
+                //msg = msg.Replace("{{competencia}}", $"{reconocimiento.}");
+
+                //msg = msg.Replace("{{comentario}}", $"{reconocimiento.competencia_descripcion}");
+                msg = msg.Replace("{{nombre_envia}}", $"{reconocimiento.nombre_quien_envia}");
                 msg = msg.Replace("{{comentario}}", $"{reconocimiento.comentario}");
+                msg = msg.Replace("{{recibe}}", $"{reconocimiento.recibe}");
 
-                var ITGovUrl = _config.GetSection("UrlApps").GetValue<string>("ITGovApp");
-                var url = $"{ITGovUrl}/Login/Index?applicationName=Reconocimientos";
 
-                msg = msg.Replace("{{Url}}", $"{url}");
-                foreach (string imgpath in ImgPaths)
-                {
-                    string nombreImagen = "Competencias_Banner " + reconocimiento.competencia_nombre + ".jpg";
-                    if (imgpath.Contains(nombreImagen))
-                    {
-                        var image = builder.LinkedResources.Add(imgpath);
-                        image.ContentId = MimeUtils.GenerateMessageId();
-                        msg = msg.Replace("{{competencia_imagen}}", image.ContentId);
-                    }
+                //var ITGovUrl = _config.GetSection("UrlApps").GetValue<string>("ITGovApp");
+                //var url = $"{ITGovUrl}/Login/Index?applicationName=Reconocimientos";
 
-                    if (imgpath.Contains("logo_banner.png"))
-                    {
-                        var image = builder.LinkedResources.Add(imgpath);
-                        image.ContentId = MimeUtils.GenerateMessageId();
-                        msg = msg.Replace("{{logo}}", image.ContentId);
-                    }
-                }
+                //msg = msg.Replace("{{Url}}", $"{url}");
+                //foreach (string imgpath in ImgPaths)
+                //{
+                //    if (imgpath.Contains("team.png"))
+                //    {
+                //        var image = builder.LinkedResources.Add(imgpath);
+                //        image.ContentId = MimeUtils.GenerateMessageId();
+                //        msg = msg.Replace("{{competencia_imagen}}", image.ContentId);
+                //    }
+
+                //    if (imgpath.Contains("principal.jpg"))
+                //    {
+                //        var image = builder.LinkedResources.Add(imgpath);
+                //        image.ContentId = MimeUtils.GenerateMessageId();
+                //        msg = msg.Replace("{{logo}}", image.ContentId);
+                //    }
+                //}
 
                 builder.HtmlBody = msg;
             }

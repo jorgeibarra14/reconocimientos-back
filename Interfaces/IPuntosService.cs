@@ -19,7 +19,7 @@ namespace Reconocimientos.Interfaces
         int EliminarPuntos(int id);
 
         int ActualizarPuntosReconocimiento(Puntos puntos);
-
+        
         int CorteManualDePuntos();
 
         int InsertarPuntosTienda(UsuariosPuntos usuariosPuntos);

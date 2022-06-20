@@ -45,6 +45,7 @@ namespace Reconocimientos.Models
         public string competencia_nombre { get; set; }
         public string competencia_descripcion { get; set; }
         public string nombre_quien_envia { get; set; }
+        public string recibe { get; set; }
         public string comentario { get; set; }
     }
 

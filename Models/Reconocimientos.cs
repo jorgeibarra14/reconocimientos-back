@@ -20,6 +20,7 @@ namespace Reconocimientos.Models
         public bool activo { get; set; }
         public DateTime fecha_registro { get; set; }
         public int tipo { get; set; }
+        public int periodo { get; set; }
         public int id_puntos { get; set; }
     }
 

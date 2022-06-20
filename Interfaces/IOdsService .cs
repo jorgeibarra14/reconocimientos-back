@@ -12,5 +12,6 @@ namespace Reconocimientos.Interfaces
         InformacionOdsDetalle ObtenerObjInformacionODSporId(string id_empleado);
         IEnumerable<InformacionOdsDetalle> ObtenerInformacionODS(string userId, int companyId);
         IEnumerable<InformacionOdsDetalle> ObtenerInformacionODSporNombre(string nombre);
+        IEnumerable<InformacionOdsDetalle> GetAllUsers();
     }
 }

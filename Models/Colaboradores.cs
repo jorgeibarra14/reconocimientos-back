@@ -9,6 +9,7 @@ namespace Reconocimientos.Models
     {
         public string ID { get; set; }
         public string Id_Mga_PlazasMh { get; set; }
+        public string Ava { get; set; }
         public string Nombre { get; set; }
         public string Area { get; set; }
         public string Sistema { get; set; }

@@ -40,6 +40,7 @@
     public class ReconocimientosEntregadosDetalles
     {
         public string id { get; set; }
+        public string avatar { get; set; }
 
         public string nombre { get; set; }
 
@@ -57,6 +58,8 @@
 
         public string Id { get; set; }
         public string Id_MGA_PlazasMH { get; set; }
+        public string Ava { get; set; }
+        public string Avatar { get; set; }
         public string Nombre { get; set; }
         public string Paterno { get; set; }
         public string Materno { get; set; }
@@ -71,7 +74,7 @@
         public string Id_Autorizador { get; set; }
         public string Nombre_Autorizador { get; set; }
         public string IsObjetivoTemprano { get; set; }
-        public string Activo { get; set; }
+        public bool Activo { get; set; }
         public string NivelPuesto { get; set; }
         public string Foto { get; set; }
     }

@@ -103,10 +103,12 @@ namespace Reconocimientos.Controllers
                     {
                         reconocimiento.id_empleado_autorizador = "";
                     }
-                    var usuarioPuntos = new UsuariosPuntos{ IdEmpleado = reconocimiento.id_empleado_recibe, Valor = 15, Tipo = "Reconocimiento", IdPedido=0};
+
+                    var reconocimiento_id = _reconocimientoservice.InsertarReconocimiento(reconocimiento);
+                    var usuarioPuntos = new UsuariosPuntos{ IdEmpleado = reconocimiento.id_empleado_recibe, Valor = 15, Tipo = "Reconocimiento", IdPedido=0, reconocimiento_id = reconocimiento_id};
                     
                     _puntoService.InsertarPuntosTienda(usuarioPuntos);
-                    return Ok(_reconocimientoservice.InsertarReconocimiento(reconocimiento));
+                    return Ok(reconocimiento_id);
                 }
 
             }
@@ -140,6 +142,13 @@ namespace Reconocimientos.Controllers
             if (reconocimiento.tipo == 1 || reconocimiento.tipo == 0)
             {
                 result = _reconocimientoservice.AprobarRechazarReconocimiento(reconocimiento);
+                if (result == 1)
+                {
+                    if(reconocimiento.aprobado)
+                    {
+                        result = _reconocimientoservice.AprobarPuntosPorReconocimientoId(reconocimiento);
+                    }
+                }
             }
             else
             {
@@ -305,7 +314,7 @@ namespace Reconocimientos.Controllers
         [HttpGet("ObtenerReconocimientosEntregadosComp")]
         public async Task<ActionResult<IEnumerable<ReconocimientosEntregadosDetalles>>> ObtenerReconocimientosEntregadosComp(string id_empleado_envia, string nombreCompetencia, bool activo)
         {
-            List<ReconocimientosEntregadosDetalles> listaDetalle = (List<ReconocimientosEntregadosDetalles>)_reconocimientoservice.ReconocerAOtrosPorCompetencia(id_empleado_envia, nombreCompetencia, activo);
+            List<ReconocimientosEntregadosDetalles> listaDetalle = _reconocimientoservice.ReconocerAOtrosPorCompetencia(id_empleado_envia, nombreCompetencia, activo).ToList();
             if (listaDetalle.Count() > 0)
             {
                 foreach (ReconocimientosEntregadosDetalles item in listaDetalle)
@@ -315,6 +324,7 @@ namespace Reconocimientos.Controllers
                     if (listaId.Count > 0)
                     {
                         item.nombre = listaId[0].NombreCompleto;
+                        item.avatar = listaId[0].Avatar;
                         //item.img = listaId[0].Foto;
                     }
                 }
