@@ -13,11 +13,13 @@ namespace Reconocimientos.Services
     {
         private readonly IConfiguration _config;
         private readonly IDbConnection con;
+        private readonly IOdsService _odsService;
 
-        public PuntosService(IConfiguration configuration)
+        public PuntosService(IConfiguration configuration, IOdsService odsService)
         {
             _config = configuration;
             con = new SqlConnection(configuration["ConnectionStrings:DefaultConnection"]);
+            _odsService = odsService;
         }
 
         public int InsertarPuntos(Puntos puntos)
@@ -149,7 +151,30 @@ namespace Reconocimientos.Services
                 using (con)
                 {
                     affectedRows = con.Execute(_config["QuerysPuntos:UpdateOldPuntos"]);               
-                    affectedRows = con.Execute(_config["QuerysPuntos:InsertNewPuntos"]);
+                    // affectedRows = con.Execute(_config["QuerysPuntos:InsertNewPuntos"]);
+                    var moment = DateTime.Today;
+                    int year = moment.Year;
+                    var newPuntos = 0;
+                    var query = _config["QuerysPuntos:InsertPuntos"];
+                    var usuarios = _odsService.GetAllUsers();
+                    foreach (var item in usuarios)
+                    {
+                        if (item.Activo)
+                        {
+                            using (IDbConnection con = new SqlConnection(_config["ConnectionStrings:DefaultConnection"]))
+                            {
+                                con.Open();
+
+                                affectedRows = con.Execute(query,
+                                    new
+                                    {
+                                        IdEmpleado = item.Id, 
+                                        Puntos = 5, 
+                                        Periodo = year
+                                    });
+                            }   
+                        }
+                    }
                 }
                 return affectedRows;
             }
@@ -179,7 +204,8 @@ namespace Reconocimientos.Services
                             IdPedido = usuariosPuntos.IdPedido,
                             Justificacion = usuariosPuntos.Justificacion,
                             ConceptoId = usuariosPuntos.ConceptoId,
-                            IdEmpleadoOtorga = usuariosPuntos.IdEmpleadoOtorga
+                            IdEmpleadoOtorga = usuariosPuntos.IdEmpleadoOtorga,
+                            reconocimiento_id = usuariosPuntos.reconocimiento_id
                         });
                 }
 

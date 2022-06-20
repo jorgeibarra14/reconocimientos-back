@@ -103,10 +103,12 @@ namespace Reconocimientos.Controllers
                     {
                         reconocimiento.id_empleado_autorizador = "";
                     }
-                    var usuarioPuntos = new UsuariosPuntos{ IdEmpleado = reconocimiento.id_empleado_recibe, Valor = 15, Tipo = "Reconocimiento", IdPedido=0};
+
+                    var reconocimiento_id = _reconocimientoservice.InsertarReconocimiento(reconocimiento);
+                    var usuarioPuntos = new UsuariosPuntos{ IdEmpleado = reconocimiento.id_empleado_recibe, Valor = 15, Tipo = "Reconocimiento", IdPedido=0, reconocimiento_id = reconocimiento_id};
                     
                     _puntoService.InsertarPuntosTienda(usuarioPuntos);
-                    return Ok(_reconocimientoservice.InsertarReconocimiento(reconocimiento));
+                    return Ok(reconocimiento_id);
                 }
 
             }
@@ -140,6 +142,13 @@ namespace Reconocimientos.Controllers
             if (reconocimiento.tipo == 1 || reconocimiento.tipo == 0)
             {
                 result = _reconocimientoservice.AprobarRechazarReconocimiento(reconocimiento);
+                if (result == 1)
+                {
+                    if(reconocimiento.aprobado)
+                    {
+                        result = _reconocimientoservice.AprobarPuntosPorReconocimientoId(reconocimiento);
+                    }
+                }
             }
             else
             {

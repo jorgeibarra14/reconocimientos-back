@@ -20,6 +20,7 @@ namespace Reconocimientos.Models
         public int ConceptoId { get; set; }
         public string Justificacion { get; set; }
         public bool Activo { get; set; }
-
+        public int periodo { get; set; }
+        public int reconocimiento_id { get; set; }
     }
 }

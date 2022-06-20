@@ -105,7 +105,6 @@ namespace Reconocimientos.Services
                 throw new Exception(e.Message);
             }
         }
-
         public IEnumerable<Pedidos> ObtenerPedidosSolicitante(int id_solicitante)
         {
             bool activo = true;
@@ -214,6 +213,7 @@ namespace Reconocimientos.Services
             try
             {
                 var affectedRows = 0;
+                var ped = pedidos;
                 using (IDbConnection con = new SqlConnection(_config["ConnectionStrings:DefaultConnection"]))
                 {
                     affectedRows = con.Execute(_config["QuerysPedidos:UpdatePedidos"],
@@ -224,6 +224,17 @@ namespace Reconocimientos.Services
                             ComentarioResolucion = pedidos.comentario_resolucion,
                             FechaResolucion = DateTime.Now
                         });
+                    if (pedidos.activo == false)
+                    {
+                        var query = _config["QuerysUsuariosPuntos:ObtenerPuntosPorPedidoId"];
+                        var result = con.Query<UsuariosPuntos>(query, new { Id = pedidos.id }).FirstOrDefault();
+                        var insert = con.Execute(_config["QuerysUsuariosPuntos:InsertPuntosDevueltos"],
+                            new
+                            {
+                                IdEmpleado = result.IdEmpleado,
+                                Valor = Math.Abs(result.Valor)
+                            });
+                    }
                 }
                 return affectedRows;
             }
