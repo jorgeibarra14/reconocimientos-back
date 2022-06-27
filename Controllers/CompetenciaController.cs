@@ -57,30 +57,7 @@ namespace Reconocimientos.Controllers
         [HttpGet("ObtenerCompetencias")]
         public ActionResult<IEnumerable<CompetencyViewModel>> ObtenerCompetencias(bool activo,string nivel)
         {
-            var ITGovUrlApi = _configuration.GetSection("UrlApis").GetValue<string>("ITGovAPI");
-            var Url = ITGovUrlApi + "/Competencies/company/4";
-            // Create a request for the URL.
-            var request = WebRequest.CreateHttp(Url);
-
-            request.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
-            // If required by the server, set the credentials.
-            request.Credentials = CredentialCache.DefaultCredentials;
-
-            // Get the response.
-            WebResponse response = request.GetResponse();
-            // Display the status.
-            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
-            var res = new List<CompetencyViewModel>(); 
-            using (Stream dataStream = response.GetResponseStream())
-            {
-                StreamReader reader = new StreamReader(dataStream);
-
-                var stringRes = reader.ReadToEnd();
-                res = JsonConvert.DeserializeObject < List<CompetencyViewModel>>(stringRes);
-            }
-
-            response.Close();
-            return Ok(res);
+            return Ok(_competenciaService.ObtenerCompetencias(activo, nivel));
         }
 
         // GET api/<CompetenciaController>/ObtenerCompetenciaId
