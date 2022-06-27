@@ -142,7 +142,7 @@ namespace Reconocimientos.Controllers
                 var claims = new List<Claim>
                 {
                     new Claim("AppId", appConfig.Usuario.AppId.ToString() != null ? appConfig.Usuario.AppId.ToString()  : ""),
-                    new Claim("Avatar", appConfig.Usuario.Avatar != null ? appConfig.Usuario.Avatar.ToString()  : ""),
+                    new Claim("Avatar", appConfig.Usuario.Avatar != null ? appConfig.Usuario.Avatar  : ""),
                     new Claim("Id", appConfig.Usuario.Id != null ? appConfig.Usuario.Id  : ""),
                     new Claim("Nombre", appConfig.Usuario.Nombre != null ? appConfig.Usuario.Nombre  : ""),
                     new Claim("Paterno", appConfig.Usuario.Paterno != null ? appConfig.Usuario.Paterno  : ""),
