@@ -256,12 +256,11 @@ namespace Reconocimientos.Controllers
                 {
                     if (item.nombre == itemCompetencia.Name)
                     {
-
+                        item.id_competencia = itemCompetencia.Id;
                         item.img = itemCompetencia.Image;
                     }
                 }
             }
-
             return Ok(misReconocimientos);
         }
 
@@ -301,7 +300,7 @@ namespace Reconocimientos.Controllers
                 {
                     if (item.nombre == itemCompetencia.Name)
                     {
-
+                        item.id_competencia = itemCompetencia.Id;
                         item.img = itemCompetencia.Image;
                     }
                 }
