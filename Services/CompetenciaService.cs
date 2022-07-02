@@ -146,10 +146,10 @@ namespace Reconocimientos.Services
             }
         }
 
-        public IEnumerable<CompetencyViewModel> obtenerCompetenciasITGov()
+        public IEnumerable<BussinessPractice> obtenerCompetenciasITGov()
         {
             var ITGovUrlApi = _config.GetSection("UrlApis").GetValue<string>("ITGovAPI");
-            var Url = ITGovUrlApi + "/Competencies/company/4";
+            var Url = ITGovUrlApi + "/BussinessPractices";
             // Create a request for the URL.
             var request = WebRequest.CreateHttp(Url);
 
@@ -161,13 +161,13 @@ namespace Reconocimientos.Services
             WebResponse response = request.GetResponse();
             // Display the status.
             Console.WriteLine(((HttpWebResponse)response).StatusDescription);
-            var res = new List<CompetencyViewModel>();
+            var res = new List<BussinessPractice>();
             using (Stream dataStream = response.GetResponseStream())
             {
                 StreamReader reader = new StreamReader(dataStream);
 
                 var stringRes = reader.ReadToEnd();
-                res = JsonConvert.DeserializeObject<List<CompetencyViewModel>>(stringRes);
+                res = JsonConvert.DeserializeObject<List<BussinessPractice>>(stringRes);
             }
 
             response.Close();

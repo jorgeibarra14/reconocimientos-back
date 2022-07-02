@@ -85,7 +85,7 @@ namespace Reconocimientos.Controllers
                 CorreoNotificacion correoNotificacion = new CorreoNotificacion();
 
                 //List<Usuario> usuario = (List<Usuario>)await ObtenerEmpleadosPorId(notificacion.id_empleado.ToString());
-                List<InformacionOdsDetalle> usuario = (List<InformacionOdsDetalle>)await ObtenerEmpleadosPorId(notificacion.id_empleado.ToString());
+                var usuario = await ObtenerEmpleadosPorId(notificacion.id_empleado);
 
                 //if (string.IsNullOrEmpty(usuario[0].Email))
                 //{
@@ -96,27 +96,27 @@ namespace Reconocimientos.Controllers
                     if (notificacion.titulo == "Denegado")
                     {
                         correoNotificacion.ToMail = new List<string>();
-                        correoNotificacion.ToMail.Add(usuario[0].Email);
+                        correoNotificacion.ToMail.Add(usuario.Email);
 
                         correoNotificacion.reconocimientorechazado = new ReconocimientoRechazado();
                         correoNotificacion.reconocimientorechazado.body = notificacion.descripcion;
-                        correoNotificacion.reconocimientorechazado.nombre = usuario[0].NombreCompleto;
+                        correoNotificacion.reconocimientorechazado.nombre = usuario.NombreCompleto;
 
                         correoNotificacion.TipoEvento = "ReconociminetoRechazado";
                         correoNotificacion.Subject = notificacion.titulo;
                     }
                     else
                     {
-                        List<Models.Reconocimientos> reconocimiento = (List<Models.Reconocimientos>)_reconocimientoservice.ObtenerReconocimientosId(notificacion.id_reconocimiento, true);
+                        var reconocimiento = _reconocimientoservice.ObtenerReconocimientosId(notificacion.id_reconocimiento, true).FirstOrDefault();
 
-                        if (reconocimiento[0].id <= 0)
+                        if (reconocimiento.id <= 0)
                         {
                             return StatusCode((int)HttpStatusCode.OK, "Reconocimiento no encontrado, no se envio notificación por correo");
                         }
 
-                    List<CompetencyViewModel> competencia = (List<CompetencyViewModel>)_competenciaService.obtenerCompetenciasITGov().ToList();
+                    var competencia = _competenciaService.obtenerCompetenciasITGov().ToList();
 
-                    var c = competencia.Find(c => c.Id == reconocimiento[0].id_competencia);
+                    var c = competencia.Find(c => c.Id == reconocimiento.id_competencia);
 
                     if (c.Id <= 0)
                         {
@@ -124,16 +124,16 @@ namespace Reconocimientos.Controllers
                         }
 
                         correoNotificacion.ToMail = new List<string>();
-                        correoNotificacion.ToMail.Add(usuario[0].Email);
+                        correoNotificacion.ToMail.Add(usuario.Email);
 
                         correoNotificacion.reconocimientoaprobado = new ReconocimientoAprobado();
                         correoNotificacion.reconocimientoaprobado.competencia_id = c.Id.ToString();
                         correoNotificacion.reconocimientoaprobado.competencia_nombre = c.Name;
                         correoNotificacion.reconocimientoaprobado.competencia_descripcion = c.Description;
-                        correoNotificacion.reconocimientoaprobado.recibe = usuario[0].NombreCompleto;
+                        correoNotificacion.reconocimientoaprobado.recibe = usuario.NombreCompleto;
 
                         correoNotificacion.reconocimientoaprobado.nombre_quien_envia = notificacion.descripcion;
-                        correoNotificacion.reconocimientoaprobado.comentario = reconocimiento[0].motivo + " y " + reconocimiento[0].logro;
+                        correoNotificacion.reconocimientoaprobado.comentario = reconocimiento.motivo + " y " + reconocimiento.logro;
 
                         correoNotificacion.TipoEvento = "ReconociminetoAprobado";
                         correoNotificacion.Subject = notificacion.titulo;
@@ -149,7 +149,7 @@ namespace Reconocimientos.Controllers
             }
         }
 
-        public Task<IEnumerable<InformacionOdsDetalle>> ObtenerEmpleadosPorId(string Id)
+        public Task<InformacionOdsDetalle> ObtenerEmpleadosPorId(string Id)
          {
             try
             {
@@ -159,30 +159,12 @@ namespace Reconocimientos.Controllers
                 //var UrlApi = _configuration.GetSection("UrlApis").GetValue<string>("ITGovAPI");
                 //var Url = UrlApi + "/user/byemployeesid";
 
-                IEnumerable<InformacionOdsDetalle> usuarios;
-                //using (HttpClient client = new HttpClient())
-                //{
-                //    var itgovResponse = await client.PostAsJsonAsync(Url, new { Users = empleadosId.Select(x => new { Id = x }) });
-                //    usuarios = JsonConvert.DeserializeObject<List<Usuario>>(await itgovResponse.Content.ReadAsStringAsync());
+                InformacionOdsDetalle usuario;
+                
 
+                usuario = _odsService.ObtenerInformacionODSporId(Id).FirstOrDefault();
 
-                usuarios = _odsService.ObtenerInformacionODSporId(Id).ToList();
-
-                //foreach (InformacionOdsDetalle item in usuarios)
-                //{
-                //BaseUser user = new BaseUser();
-                //user = GetUserByID(item.Id);
-                //if (user == null)
-                //{
-                //item.Foto = "../../../assets/img/avatar.png";
-                //}
-                //else if (!string.IsNullOrEmpty(user.Foto))
-                //{
-                //    item.Foto = user.Foto;
-                //}
-                //}
-                //}
-                return Task.FromResult(usuarios);
+                return Task.FromResult(usuario);
             }
             catch (Exception Ex)
             {

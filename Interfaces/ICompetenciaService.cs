@@ -16,6 +16,6 @@ namespace Reconocimientos.Interfaces
         int EliminarCompetencias(int id);
 
         int InsertarCompetencias(Competencias competencias);
-        IEnumerable<CompetencyViewModel> obtenerCompetenciasITGov();
+        IEnumerable<BussinessPractice> obtenerCompetenciasITGov();
     }
 }

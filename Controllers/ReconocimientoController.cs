@@ -248,16 +248,16 @@ namespace Reconocimientos.Controllers
         {
             List<MisReconocimientos> misReconocimientos = (List<MisReconocimientos>)_reconocimientoservice.MisReconocimientos(id_empleado_recibe, activo);
             List<InformacionOdsDetalle> empleado = _odsService.ObtenerInformacionODSporId(id_empleado_recibe).ToList();
-            List<CompetencyViewModel> listaCompetencoas = _competenciaService.obtenerCompetenciasITGov().ToList();
+            List<BussinessPractice> listaCompetencoas = _competenciaService.obtenerCompetenciasITGov().ToList();
 
             foreach (MisReconocimientos item in misReconocimientos)
             {
-                foreach (CompetencyViewModel itemCompetencia in listaCompetencoas)
+                foreach (var itemCompetencia in listaCompetencoas)
                 {
                     if (item.nombre == itemCompetencia.Name)
                     {
 
-                        item.img = itemCompetencia.Img;
+                        item.img = itemCompetencia.Image;
                     }
                 }
             }
@@ -293,16 +293,16 @@ namespace Reconocimientos.Controllers
         {
             List<ReconocimientosEntregados> reconocimientosentregados = (List<ReconocimientosEntregados>)_reconocimientoservice.ReconocerAOtros(id_empleado_envia, activo);
             List<InformacionOdsDetalle> empleado = _odsService.ObtenerInformacionODSporId(id_empleado_envia).ToList();
-            List<CompetencyViewModel> listaCompetencoas = _competenciaService.obtenerCompetenciasITGov().ToList();
+            List<BussinessPractice> listaCompetencoas = _competenciaService.obtenerCompetenciasITGov().ToList();
 
             foreach (ReconocimientosEntregados item in reconocimientosentregados)
             {
-                foreach (CompetencyViewModel itemCompetencia in listaCompetencoas)
+                foreach (var itemCompetencia in listaCompetencoas)
                 {
                     if (item.nombre == itemCompetencia.Name)
                     {
 
-                        item.img = itemCompetencia.Img;
+                        item.img = itemCompetencia.Image;
                     }
                 }
             }
