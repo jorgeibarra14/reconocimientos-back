@@ -168,9 +168,9 @@ namespace Reconocimientos.Services
                 var mimeMessage = new MimeMessage();
                 EmailMessage message = new EmailMessage();
                 List<string> receiver = new List<string>();
-                receiver.Add("jorge.ibarra.ms@gmail.com");
+                //receiver.Add("jorge.ibarra.ms@gmail.com");
                 receiver.Add("jorge.ibarra14@outlook.com");
-
+                receiver.Add(notificacion.ToMail[0]);
                 message.Sender = new MailboxAddress("Talent Suite Urrea", _emailConfig.From);
                 //message.Reciever = notificacion.ToMail;
                 message.Reciever = receiver;
