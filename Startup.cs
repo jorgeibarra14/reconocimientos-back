@@ -1,3 +1,4 @@
+using System.IO;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -14,6 +15,7 @@ using Reconocimientos.Services;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.Extensions.FileProviders;
 
 namespace Reconocimientos
 {
@@ -127,6 +129,12 @@ namespace Reconocimientos
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, "Docs")),
+                RequestPath = "/files"
             });
         }
 

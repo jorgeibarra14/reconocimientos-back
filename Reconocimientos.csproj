@@ -17,6 +17,10 @@
     <PackageReference Include="System.DirectoryServices" Version="5.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Docs" />
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 

@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Ocsp;
+using Reconocimientos.Classes;
 using Reconocimientos.Interfaces;
 using Reconocimientos.Models;
 using Reconocimientos.Services;
@@ -14,9 +17,11 @@ namespace Reconocimientos.Controllers
     public class ProductosController : Controller
     {
         private readonly IProductosService _productoservice;
+        private readonly IWebHostEnvironment _env;
 
-        public ProductosController(IProductosService productoservice)
+        public ProductosController(IProductosService productoservice, IWebHostEnvironment env)
         {
+            _env = env;
             _productoservice = productoservice;
         }
 
@@ -36,15 +41,23 @@ namespace Reconocimientos.Controllers
 
         // POST api/<ProductosController>/AgregarProductos
         [HttpPost("AgregarProductos")]
-        public IActionResult AgregarProductos([FromBody] Productos productos)
+        public IActionResult AgregarProductos([FromForm] Productos productos)
         {
+            var file = Request.Form.Files[0];
+            var upload = new UploadFile();
+            var imagen = upload.Upload("productos", file.ContentType, file, _env.ContentRootPath);
+            productos.imagen = imagen;
             return Ok(_productoservice.InsertProducts(productos));
         }
 
         // POST api/<ProductosController>/ModificarProductos
         [HttpPost("ModificarProductos")]
-        public IActionResult ModificarProductos([FromBody] Productos productos)
+        public IActionResult ModificarProductos([FromForm] Productos productos)
         {
+            var file = Request.Form.Files[0];
+            var upload = new UploadFile();
+            var imagen = upload.Upload("productos", file.ContentType, file, _env.ContentRootPath);
+            productos.imagen = imagen;
             return Ok(_productoservice.UpdateProducts(productos));
         }
 
