@@ -375,5 +375,18 @@ namespace Reconocimientos.Services
                 throw new Exception(e.Message);
             }
         }
+
+        public IEnumerable<MisConceptosPuntos> ObtenerConceptosPuntos(string id_empleado_recibe)
+        {
+            try
+            {
+                string query = _config["QuerysReconocimientos:ObtenerConceptosPuntos"];
+                return con.Query<MisConceptosPuntos>(sql: query, new { IdEmpleado = id_empleado_recibe });
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }

@@ -243,8 +243,15 @@ namespace Reconocimientos.Controllers
         }
 
         // GET: api/<ReconocimientoController>/ObtenerMisReconocimientos
+        [HttpGet("conceptosPuntos")] 
+        public ActionResult<IEnumerable<MisConceptosPuntos>> ObtenerMisReconocimientos(string id_empleado_recibe)
+        {
+            var reconocimientos = _reconocimientoservice.ObtenerConceptosPuntos(id_empleado_recibe);
+            return Ok(reconocimientos);
+        }
+
         [HttpGet("ObtenerMisReconocimientos")]
-        public ActionResult<IEnumerable<MisReconocimientos>> ObtenerMisReconocimientos(string id_empleado_recibe, bool activo, string nombrePuesto)
+        public ActionResult<IEnumerable<MisReconocimientos>> ObtenerMisReconocimientos(string id_empleado_recibe, bool activo)
         {
             List<MisReconocimientos> misReconocimientos = (List<MisReconocimientos>)_reconocimientoservice.MisReconocimientos(id_empleado_recibe, activo);
             List<InformacionOdsDetalle> empleado = _odsService.ObtenerInformacionODSporId(id_empleado_recibe).ToList();

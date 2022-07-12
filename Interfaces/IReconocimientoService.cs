@@ -42,5 +42,6 @@ namespace Reconocimientos.Interfaces
         int AprobarPuntosConcepto(Models.Reconocimientos reconocimiento);
         int AprobarPuntosPorReconocimientoId(Models.Reconocimientos reconocimiento);
         int RechazarPuntosConcepto(Models.Reconocimientos reconocimiento);
+        IEnumerable<MisConceptosPuntos> ObtenerConceptosPuntos(string id_empleado_recibe);
     }
 }
