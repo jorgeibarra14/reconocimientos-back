@@ -36,7 +36,7 @@ namespace Reconocimientos.Services
                             id = resultCategoria[0].id,
                             nombre = resultCategoria[0].nombre,
                             descripcion = resultCategoria[0].descripcion,
-                            img= resultCategoria[0].img
+                            img= resultCategoria[0].img,
                         };
                     }
                         return result;

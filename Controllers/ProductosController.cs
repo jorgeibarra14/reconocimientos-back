@@ -44,6 +44,7 @@ namespace Reconocimientos.Controllers
         public IActionResult AgregarProductos([FromForm] Productos productos)
         {
             var file = Request.Form.Files[0];
+
             var upload = new UploadFile();
             var imagen = upload.Upload("productos", file.ContentType, file, _env.ContentRootPath);
             productos.imagen = imagen;
@@ -54,10 +55,20 @@ namespace Reconocimientos.Controllers
         [HttpPost("ModificarProductos")]
         public IActionResult ModificarProductos([FromForm] Productos productos)
         {
-            var file = Request.Form.Files[0];
-            var upload = new UploadFile();
-            var imagen = upload.Upload("productos", file.ContentType, file, _env.ContentRootPath);
-            productos.imagen = imagen;
+            if(Request.Form.Files.Count > 0)
+            {
+                var file = Request.Form.Files[0];
+
+                var upload = new UploadFile();
+                var imagen = upload.Upload("productos", file.ContentType, file, _env.ContentRootPath);
+                productos.imagen = imagen;
+      
+
+            } else
+            {
+                productos.imagen = productos.imagen;
+
+            }
             return Ok(_productoservice.UpdateProducts(productos));
         }
 
