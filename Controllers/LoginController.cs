@@ -92,7 +92,8 @@ namespace Reconocimientos.Controllers
                 try
                 {
                     response = (HttpWebResponse) request.GetResponse();
-                    if (response.StatusCode == HttpStatusCode.OK)
+                    if (response.StatusCode == HttpStatusCode.OK) {
+
                         using (var streamReader = new StreamReader(response.GetResponseStream()))
                         {
                             var json = streamReader.ReadToEnd();
@@ -103,7 +104,7 @@ namespace Reconocimientos.Controllers
                                 Name = "Admin"
                             };
                             ItGovUser usr = new ItGovUser
-                            { 
+                            {
                                 Nombre = user.Name,
                                 Paterno = user.FirstName,
                                 Materno = user.LastName,
@@ -127,9 +128,11 @@ namespace Reconocimientos.Controllers
 
                             appConfig = a;
                         }
-                    else
+                    }
+                    else {
                         throw new Exception("Server responded with Status Code " + response.StatusCode + ": " +
                                             response.StatusDescription);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -138,20 +141,22 @@ namespace Reconocimientos.Controllers
 
                 if (appConfig.Usuario == null)
                     return NotFound(new {errorMessage = "No se encontró el usuario para esta aplicación."});
-
+                string encodedAvatar = string.Empty;
+                if(appConfig.Usuario.Avatar != null)
+                    encodedAvatar = Base64Encode(appConfig.Usuario.Avatar);
                 var claims = new List<Claim>
                 {
-                    new Claim("AppId", appConfig.Usuario.AppId.ToString() != null ? appConfig.Usuario.AppId.ToString()  : ""),
-                    new Claim("Avatar", appConfig.Usuario.Avatar != null ? appConfig.Usuario.Avatar  : ""),
-                    new Claim("Id", appConfig.Usuario.Id != null ? appConfig.Usuario.Id  : ""),
-                    new Claim("Nombre", appConfig.Usuario.Nombre != null ? appConfig.Usuario.Nombre  : ""),
-                    new Claim("Paterno", appConfig.Usuario.Paterno != null ? appConfig.Usuario.Paterno  : ""),
-                    new Claim("Materno", appConfig.Usuario.Materno != null ?appConfig.Usuario.Materno  : ""),
-                    new Claim("Rol", appConfig.Usuario.Role.Name != null ?  appConfig.Usuario.Role.Name  : ""),
-                    new Claim("RolId", appConfig.Usuario.Role.Id.ToString() != null ? appConfig.Usuario.Role.Id.ToString() : ""),
-                    new Claim("Email", appConfig.Usuario.Email != null ? appConfig.Usuario.Email  : ""),
-                    new Claim("Puesto", appConfig.Usuario.Puesto != null ? appConfig.Usuario.Puesto  : ""),
-                    new Claim("NivelPuesto", appConfig.Usuario.NivelPuesto != null ? appConfig.Usuario.NivelPuesto  : ""),
+                    new Claim("AppId", appConfig.Usuario.AppId.ToString() ?? ""),
+                    new Claim("Avatar", ""),
+                    new Claim("Id", appConfig.Usuario.Id ?? ""),
+                    new Claim("Nombre", appConfig.Usuario.Nombre ?? ""),
+                    new Claim("Paterno", appConfig.Usuario.Paterno ?? ""),
+                    new Claim("Materno", appConfig.Usuario.Materno ?? ""),
+                    new Claim("Rol", appConfig.Usuario.Role.Name ?? ""),
+                    new Claim("RolId", appConfig.Usuario.Role.Id.ToString() ?? ""),
+                    new Claim("Email", appConfig.Usuario.Email ?? ""),
+                    new Claim("Puesto", appConfig.Usuario.Puesto ?? ""),
+                    new Claim("NivelPuesto", appConfig.Usuario.NivelPuesto ?? ""),
                     new Claim("IsAdminAck", appConfig.Usuario.IsAdminAck.ToString()),
                     new Claim("IsAdminStore", appConfig.Usuario.IsAdminStore.ToString()),
 
@@ -171,12 +176,18 @@ namespace Reconocimientos.Controllers
 
                 var url = ReconocimientosUrlApp + "?access_token=" + token;
 
-                return Ok(new {ejecucion = true, link = url, data = appConfig});
+                return Ok(new {link = url});
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+
+        public static string Base64Encode(string plainText) {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
         }
 
         [HttpGet]
